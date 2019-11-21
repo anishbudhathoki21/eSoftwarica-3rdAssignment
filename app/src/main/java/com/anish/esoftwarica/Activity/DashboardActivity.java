@@ -10,14 +10,20 @@ import android.webkit.WebView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.anish.esoftwarica.Fragments.fragmentAboutus;
 import com.anish.esoftwarica.Fragments.fragmentAddstd;
 import com.anish.esoftwarica.Fragments.fragmentHome;
+import com.anish.esoftwarica.Model.AddStudent;
 import com.anish.esoftwarica.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class DashboardActivity extends AppCompatActivity {
+    public static List<AddStudent> addStudents = new ArrayList<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -25,7 +31,13 @@ public class DashboardActivity extends AppCompatActivity {
         setContentView(R.layout.activity_dashboard);
 
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.FrameLt, new fragmentHome()).commit();
+        addStudents.add(new AddStudent("Anish Budhathoki", "Ktm", "Male", 20, R.drawable.male1));
+
         bottomNav.setOnNavigationItemSelectedListener(navView);
+
+
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navView= new BottomNavigationView.OnNavigationItemSelectedListener() {
