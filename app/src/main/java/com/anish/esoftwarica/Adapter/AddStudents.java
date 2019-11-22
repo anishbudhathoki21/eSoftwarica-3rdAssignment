@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,6 +20,7 @@ public class AddStudents extends RecyclerView.Adapter<AddStudents.StudentViewHol
 
     Context context;
     List<AddStudent> studentList;
+
     public AddStudents(Context context, List<AddStudent> studentList){
         this.context = context;
         this.studentList = studentList;
@@ -27,19 +29,20 @@ public class AddStudents extends RecyclerView.Adapter<AddStudents.StudentViewHol
     @Override
     public StudentViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.student_cardview,parent,false);
-       return new StudentViewHolder(view,context,studentList);
+       return new StudentViewHolder(view, context, studentList);
 
     }
 
     @Override
     public void onBindViewHolder(@NonNull StudentViewHolder holder, int position) {
 
-        AddStudent addStudent= studentList.get(position);
+        final AddStudent addStudent= studentList.get(position);
         holder.imgStudent.setImageResource(addStudent.getImage());
         holder.name.setText(addStudent.getFname());
         holder.age.setText(addStudent.getAge() + "");
         holder.gender.setText(addStudent.getGender());
         holder.address.setText(addStudent.getAddress());
+
 
 
     }
@@ -56,7 +59,7 @@ public class AddStudents extends RecyclerView.Adapter<AddStudents.StudentViewHol
         Context context;
         List<AddStudent> list;
 
-        public StudentViewHolder(@NonNull View itemView,Context context,List<AddStudent> studentList) {
+        public StudentViewHolder(@NonNull View itemView, final Context context, final List<AddStudent> list) {
             super(itemView);
             imgDel=itemView.findViewById(R.id.imgDel);
             imgStudent = itemView.findViewById(R.id.imgStudent);
@@ -66,8 +69,16 @@ public class AddStudents extends RecyclerView.Adapter<AddStudents.StudentViewHol
             address=itemView.findViewById(R.id.tvAddress);
 
             this.context = context;
-            this.list = studentList;
+            this.list = list;
 
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AddStudent addStudent = list.get(getAdapterPosition());
+                    Toast.makeText(context.getApplicationContext(), "My name is : " + addStudent.getFname(),
+                            Toast.LENGTH_SHORT).show();
+                }
+            });
             imgDel.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
